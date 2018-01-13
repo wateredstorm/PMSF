@@ -14,7 +14,7 @@ require_once(__DIR__ . '/../utils.php');
 $libs[] = "Scanner.php";
 $libs[] = "Monocle.php";
 $libs[] = "Monocle_Asner.php";
-$libs[] = "Monocle_Monkey.php";
+$libs[] = "Monocle_Alternate.php";
 $libs[] = "RocketMap.php";
 $libs[] = "RocketMap_Sloppy.php";
 
@@ -78,12 +78,23 @@ $motdContent = "";
 
 /* Marker Settings */
 
+$pathToImages = '/static/icons-safe/';                              // Path to images. Images must not contain 0s
+
 $noPokemon = false;                                                 // true/false
 $enablePokemon = 'true';                                            // true/false
+$noPokemonNumbers = false;                                          // true/false
 $noHighLevelData = false;                                           // true/false
 $noHidePokemon = false;                                             // true/false
 $hidePokemon = '[10, 13, 16, 19, 21, 29, 32, 41, 46, 48, 50, 52, 56, 74, 77, 96, 111, 133,
                   161, 163, 167, 177, 183, 191, 194, 168]';         // [] for empty
+$noExcludeMinIV = false;                                             // true/false
+$excludeMinIV = '[131, 143, 147, 148, 149, 248]';                         // [] for empty
+
+$noMinIV = false;                                                // true/false
+$minIV = '0';                                                   // "0" for empty or a number
+
+$noMinLevel = false;                                                // true/false
+$minLevel = '0';                                                   // "0" for empty or a number
 
 $noGyms = false;                                                    // true/false
 $enableGyms = 'false';                                              // true/false
