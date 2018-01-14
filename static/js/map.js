@@ -85,6 +85,7 @@ var assetsPath = 'static/sounds/'
 var iconpath = null
 
 var gymTypes = ['Uncontested', 'Mystic', 'Valor', 'Instinct']
+var triggerGyms = Store.get('triggerGyms')
 
 
 createjs.Sound.registerSound('static/sounds/ding.mp3', 'ding')
@@ -890,10 +891,15 @@ function getGymMarkerIcon(item) {
     } else {
         teamStr = gymTypes[item['team_id']] + '_' + level
     }
+    var exIcon = ''
+    if (triggerGyms.includes(item['gym_id'])) {
+        exIcon = '<img src="static/images/ex.png" style="position:absolute;right:25px;bottom:2px;"/>'
+    }
     if (item['raid_pokemon_id'] != null && item.raid_end > Date.now()) {
         return '<div style="position:relative;">' +
             '<img src="static/forts/' + Store.get('gymMarkerStyle') + '/' + teamStr + '.png" style="width:55px;height:auto;"/>' +
             '<i class="pokemon-raid-sprite n' + item.raid_pokemon_id + '"></i>' +
+            exIcon +
             '</div>'
     } else if (item['raid_level'] !== null && item.raid_end > Date.now()) {
         var raidEgg = ''
@@ -907,21 +913,28 @@ function getGymMarkerIcon(item) {
         return '<div style="position:relative;">' +
             '<img src="static/forts/' + Store.get('gymMarkerStyle') + '/' + teamStr + '.png" style="width:55px;height:auto;"/>' +
             '<img src="static/raids/egg_' + raidEgg + '.png" style="width:30px;height:auto;position:absolute;top:8px;right:12px;"/>' +
+            exIcon +
             '</div>'
     } else {
         return '<div>' +
             '<img src="static/forts/' + Store.get('gymMarkerStyle') + '/' + gymTypes[item['team_id']] + '.png" style="width:48px;height: auto;"/>' +
+            exIcon +
             '</div>'
     }
 }
 
 function setupGymMarker(item) {
+    var zValue = 1
+    if (triggerGyms.includes(item['gym_id'])) {
+        zValue += 1
+    }
     var marker = new RichMarker({
         position: new google.maps.LatLng(item['latitude'], item['longitude']),
         map: map,
         content: getGymMarkerIcon(item),
         flat: true,
-        anchor: RichMarkerPosition.MIDDLE
+        anchor: RichMarkerPosition.MIDDLE,
+        zIndex: zValue
     })
 
     if (!marker.rangeCircle && isRangeActive(map)) {

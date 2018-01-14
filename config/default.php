@@ -79,6 +79,7 @@ $motdContent = "";
 /* Marker Settings */
 
 $pathToImages = '/static/icons-safe/';                              // Path to images. Images must not contain 0s
+$triggerGyms = '[]';
 
 $noPokemon = false;                                                 // true/false
 $enablePokemon = 'true';                                            // true/false

@@ -103,6 +103,7 @@
     "spriteFileLarge": true,
     "icons": true,
     "mapType": true,
-    "getIv": true
+    "getIv": true,
+    "triggerGyms": true
   }
 }
