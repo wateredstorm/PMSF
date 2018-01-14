@@ -79,7 +79,6 @@ $motdContent = "";
 /* Marker Settings */
 
 $pathToImages = '/static/icons-safe/';                              // Path to images. Images must not contain 0s
-$triggerGyms = '[]';
 
 $noPokemon = false;                                                 // true/false
 $enablePokemon = 'true';                                            // true/false
@@ -181,6 +180,8 @@ $noLocationStyle = false;                                           // true/fals
 $locationStyle = 'none';                                            // none, google, red, red_animated, blue, blue_animated, yellow, yellow_animated, pokesition, pokeball
 
 $osmTileServer = 'tile.openstreetmap.org';                          // osm tile server (no trailing slash)
+
+$triggerGyms = '[]';                                                //Enter gym_ids to mark a gym as being eligble for ex-raids. Example: '["79869655897987698557688.16", "796968568586967965544434.17"]'
 
 //-----------------------------------------------------
 // Raid API
