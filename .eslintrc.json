@@ -96,11 +96,13 @@
     "enableFollowMe": true,
     "enableSpawnArea": true,
     "iconSize": true,
+    "IconNotifySizeModifier": true,
     "locationStyle": true,
     "gymStyle": true,
     "spriteFile": true,
     "spriteFileLarge": true,
     "icons": true,
-    "mapType": true
+    "mapType": true,
+    "getIv": true
   }
 }
