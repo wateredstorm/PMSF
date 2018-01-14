@@ -1022,5 +1022,9 @@
   "Maximum Free Slots": "Max. freie Plätze",
   "Last Scan": "Letzter Scan",
   "Location &amp; Search": "Ort & Suche",
-  "Notify of Rarity": "Seltenheit"
+  "Notify of Rarity": "Seltenheit",
+  "Hide Pokemon": "Verbergen",
+  "Excl. Min IV/Lvl": "Immer anzeigen",
+  "All": "Alle",
+  "None": "Keine"
 }

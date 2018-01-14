@@ -167,8 +167,8 @@ if ($blockIframe) {
                 <div id="pokemon-filter-wrapper" style="display:none">
                     <div id="tabs">
                         <ul>
-                            <li><a href="#tabs-1">Hide Pokemon</a></li>
-                            <li><a href="#tabs-2">Excl. Min IV/Lvl</a></li>
+                            <li><a href="#tabs-1"><?php echo i8ln('Hide Pokemon') ?></a></li>
+                            <li><a href="#tabs-2"><?php echo i8ln('Excl. Min IV/Lvl') ?></a></li>
                         </ul>
                         <div id="tabs-1">
                             <?php
@@ -181,7 +181,7 @@ if ($blockIframe) {
                                             <?php
                                             pokemonFilterImages($noPokemonNumbers); ?>
                                         </div>
-                                        <a href="#" class="select-all">All</a><a href="#" class="hide-all">None</a>
+                                        <a href="#" class="select-all"><?php echo i8ln('All') ?></a><a href="#" class="hide-all"><?php echo i8ln('None') ?></a>
                                     </label>
                                 </div>
                                 <?php
