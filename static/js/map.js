@@ -58,7 +58,6 @@ var rangeMarkers = ['pokemon', 'pokestop', 'gym']
 var storeZoom = true
 var scanPath
 var moves
-var weather
 var osmTileServer
 
 var oSwLat
@@ -414,7 +413,6 @@ function isTemporaryHidden(pokemonId) {
 
 function pokemonLabel(item) {
     var name = item['pokemon_name']
-    var rarityDisplay = item['pokemon_rarity'] ? '(' + item['pokemon_rarity'] + ')' : ''
     var types = item['pokemon_types']
     var typesDisplay = ''
     var encounterId = item['encounter_id']
@@ -443,11 +441,6 @@ function pokemonLabel(item) {
     var details = ''
     if (atk != null && def != null && sta != null) {
         var iv = getIv(atk, def, sta)
-        details =
-            '<div>' +
-            'IV: ' + iv.toFixed(1) + '% (' + atk + '/' + def + '/' + sta + ')' +
-            '</div>'
-
         if (cp != null && (cpMultiplier != null || level != null)) {
             var pokemonLevel
             if (level != null) {
@@ -455,60 +448,63 @@ function pokemonLabel(item) {
             } else {
                 pokemonLevel = getPokemonLevel(cpMultiplier)
             }
-            details +=
+            if (iv === 100) {
+                details =
                 '<div>' +
-                'CP: ' + cp + ' | Level: ' + pokemonLevel +
+                '<b>' + iv.toFixed(0) + '%</b> | ' + cp + i8ln('cp') + ' | L: ' + pokemonLevel +
                 '</div>'
+            } else {
+                details =
+                '<div>' +
+                iv.toFixed(0) + '% (' + atk + '/' + def + '/' + sta + ')' + ' | ' + cp + i8ln('cp') + ' | L: ' + pokemonLevel +
+                '</div>'
+            }
         }
 
         details +=
             '<div>' +
-            'Moves: ' + pMove1 + ' / ' + pMove2 +
+            pMove1 + ' / ' + pMove2 +
             '</div>'
     }
+    if (weight != null && height != null) {
+        details += ' | ' + i8ln('Weight') + ': ' + weight.toFixed(2) + 'kg | ' + i8ln('Height') + ': ' + height.toFixed(2) + 'm'
+        details +=
+            '</div>'
+    }
+    var weatherIcon = ''
     if (weatherBoostedCondition !== 0) {
-        details +=
-            '<div>' +
-            'Boosted by: ' + weather[weatherBoostedCondition] +
-            '</div>'
-    }
-    if (gender != null) {
-        details +=
-            '<div>' +
-            'Gender: ' + genderType[gender - 1]
-        if (weight != null && height != null) {
-            details += ' | Weight: ' + weight.toFixed(2) + 'kg | Height: ' + height.toFixed(2) + 'm'
-        }
-        details +=
-            '</div>'
+        weatherIcon = '<img src="static/weather/' + weatherBoostedCondition + '.png" style="position:justified;width:20px;height:auto;"/> '
     }
     var contentstring =
         '<div>' +
-        '<b>' + name + '</b>'
+        '<b>' + weatherIcon + name + '</b>'
+    if (gender !== undefined && id !== 201) {
+        contentstring += ' ' + genderType[gender - 1] + ''
+    }
     if (id === 201 && form !== null && form > 0) {
         contentstring += ' (' + unownForm[item['form']] + ')'
     }
+    var notifyIcon = '<i class="fa fa-volume-up" style="font-size:20px;color:black"></i></a>&nbsp&nbsp&nbsp&nbsp'
+    if (notifiedPokemon.indexOf(item['pokemon_id']) > -1) {
+        notifyIcon = '<i class="fa fa-volume-up" style="font-size:20px;color:red"></i></a>&nbsp&nbsp&nbsp&nbsp'
+    }
     contentstring += '<span> - </span>' +
         '<small>' +
-        '<a href="https://pokemon.gameinfo.io/en/pokemon/' + id + '" target="_blank" title="View in Pokedex">#' + id + '</a>' +
+        '<a href="https://pokewiki.de/' + name + '" target="_blank" title="' + i8ln('View in Pokedex') + '">#' + id + '</a>' +
         '</small>' +
-        '<span> ' + rarityDisplay + '</span>' +
-        '<span> - </span>' +
+        '</div>' +
         '<small>' + typesDisplay + '</small>' +
-        '</div>' +
         '<div>' +
-        'Disappears at ' + getTimeStr(disappearTime) +
+        i8ln('Disappears at') + ' ' + getTimeStr(disappearTime) +
         ' <span class="label-countdown" disappears-at="' + disappearTime + '">(00m00s)</span>' +
-        '</div>' +
-        '<div>' +
-        'Location: <a href="javascript:void(0)" onclick="javascript:openMapDirections(' + latitude + ', ' + longitude + ')" title="View in Maps">' + latitude.toFixed(6) + ', ' + longitude.toFixed(7) + '</a>' +
         '</div>' +
         details +
         '<div>' +
-        '<a href="javascript:excludePokemon(' + id + ')">Exclude</a>&nbsp&nbsp' +
-        '<a href="javascript:notifyAboutPokemon(' + id + ')">Notify</a>&nbsp&nbsp' +
-        '<a href="javascript:removePokemonMarker(\'' + encounterId + '\')">Remove</a>&nbsp&nbsp' +
-        '<a href="javascript:void(0);" onclick="javascript:toggleOtherPokemon(' + id + ');" title="Toggle display of other Pokemon">Toggle Others</a>' +
+        '<a href="javascript:excludePokemon(' + id + ')"><i class="fa fa-thumbs-down" style="font-size:20px;color:black"></i></a>&nbsp&nbsp&nbsp&nbsp' +
+        '<a href="javascript:notifyAboutPokemon(' + id + ')">' + notifyIcon +
+        '<a href="javascript:removePokemonMarker(\'' + encounterId + '\')"><i class="fa fa-trash" style="font-size:20px;color:black"></i></a>&nbsp&nbsp&nbsp&nbsp' +
+        '<a href="javascript:void(0);" onclick="javascript:toggleOtherPokemon(' + id + ');" title="' + i8ln('Toggle display of other Pokemon') + '"><i class="fa fa-search-minus" style="font-size:20px;color:black"></i></a>&nbsp&nbsp&nbsp&nbsp' +
+        '<a href="javascript:void(0)" onclick="javascript:openMapDirections(' + latitude + ', ' + longitude + ')" title="' + i8ln('View in Maps') + '"><i class="fa fa-road" style="font-size:20px;color:black"></a>' +
         '</div>'
     return contentstring
 }
@@ -906,7 +902,7 @@ function getGymMarkerIcon(item) {
     if (item['raid_pokemon_id'] != null && item.raid_end > Date.now()) {
         return '<div style="position:relative;">' +
             '<img src="static/forts/' + Store.get('gymMarkerStyle') + '/' + teamStr + '.png" style="width:55px;height:auto;"/>' +
-            '<img src="' + iconpath + item.raid_pokemon_id + '.png" style="width:55px;height:auto;position:absolute;right:10px;bottom:15px;"></i>' +
+            '<img src="' + iconpath + item.raid_pokemon_id + '.png" style="width:55px;height:auto;position:absolute;right:10px;bottom:15px;"/>' +
             exIcon +
             '</div>'
     } else if (item['raid_level'] !== null && item.raid_end > Date.now()) {
@@ -2603,10 +2599,6 @@ $(function () {
 
     $.getJSON('static/dist/data/moves.min.json').done(function (data) {
         moves = data
-    })
-
-    $.getJSON('static/dist/data/weather.min.json').done(function (data) {
-        weather = data
     })
 
     $selectExclude = $('#exclude-pokemon')
