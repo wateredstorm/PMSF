@@ -473,7 +473,7 @@ function pokemonLabel(item) {
     }
     var weatherIcon = ''
     if (weatherBoostedCondition !== 0) {
-        weatherIcon = '<img src="static/weather/' + weatherBoostedCondition + '.png" style="position:justified;width:20px;height:auto;"/> '
+        weatherIcon = ' <img src="static/weather/' + weatherBoostedCondition + '.png" style="position:absolute;margin:auto;width:35px;height:auto;"/> '
     }
     var contentstring =
         '<div>' +
@@ -490,7 +490,7 @@ function pokemonLabel(item) {
     }
     contentstring += '<span> - </span>' +
         '<small>' +
-        '<a href="https://pokemon.gameinfo.io/en/pokemon/' + id + '" target="_blank" title="View in Pokedex">#' + id + '</a> ' +
+        '<a href="https://pokemon.gameinfo.io/en/pokemon/' + id + '" target="_blank" title="View in Pokedex">#' + id + '</a>' +
         weatherIcon +
         '</small>' +
         '</div>' +
