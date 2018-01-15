@@ -198,7 +198,7 @@ if ($blockIframe) {
                                             <?php
                                             pokemonFilterImages($noPokemonNumbers); ?>
                                         </div>
-                                        <a href="#" class="select-all">All</a><a href="#" class="hide-all">None</a>
+                                        <a href="#" class="select-all"><?php echo i8ln('All') ?></a><a href="#" class="hide-all"><?php echo i8ln('None') ?></a>
                                     </label>
                                 </div>
                                 <?php
@@ -532,7 +532,7 @@ if ($blockIframe) {
                 ?>
                 <div class="form-control hide-select-2">
                     <label for="notify-pokemon">
-                        <h3><?php i8ln('Notify of Pokemon') ?></h3><a href="#" class="select-all"><?php i8ln('All') ?></a>/<a href="#" class="hide-all"><?php i8ln('None') ?></a>
+                        <h3><?php echo i8ln('Notify of Pokemon') ?></h3><a href="#" class="select-all"><?php echo i8ln('All') ?></a>/<a href="#" class="hide-all"><?php echo i8ln('None') ?></a>
                         <div style="max-height:165px;overflow-y:auto;">
                             <input id="notify-pokemon" type="text" readonly="true"/>
                             <?php
