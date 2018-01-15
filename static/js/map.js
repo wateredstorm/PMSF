@@ -490,11 +490,11 @@ function pokemonLabel(item) {
     }
     contentstring += '<span> - </span>' +
         '<small>' +
-        '<a href="https://pokemon.gameinfo.io/en/pokemon/' + id + '" target="_blank" title="View in Pokedex">#' + id + '</a>' +
-        '</small>' +
-        '<span>' +
+        '<a href="https://pokemon.gameinfo.io/en/pokemon/' + id + '" target="_blank" title="View in Pokedex">#' + id + '</a> ' +
         weatherIcon +
+        '</small>' +
         '</div>' +
+        '<span>' +
         typesDisplay +
         '</span>' +
         '<div>' +
