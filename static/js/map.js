@@ -85,6 +85,7 @@ var iconpath = null
 
 var gymTypes = ['Uncontested', 'Mystic', 'Valor', 'Instinct']
 var triggerGyms = Store.get('triggerGyms')
+
 var noExGyms
 var noParkInfo
 
